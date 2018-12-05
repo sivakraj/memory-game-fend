@@ -1,0 +1,330 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+.deck {
+    width: 660px;
+    min-height: 680px;
+    background: linear-gradient(160deg, #287cff 0%, #ffffff 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    background: #021d18;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.deck .card.open {
+    transform: rotateY(0);
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    background: #ffb3e4;
+    cursor: default;
+    animation: flip 0.8s
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background: #ffb3e4;
+    font-size: 33px;
+    animation: wobble 0.8s
+}
+
+.deck .card.no-match {
+    animation: shake 0.8s;
+}
+
+/*
+ * Styles for the Score Panel
+ */
+.score-panel {
+    text-align: left;
+    width: 345px;
+    margin-bottom: 10px;
+}
+
+.score-panel .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-panel .restart {
+    float: right;
+    cursor: pointer;
+}
+
+/*
+ * Style for timer
+ */
+.timer {
+    margin: 2.0em;
+}
+
+/*
+ * Styles for the final popup
+ */
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    display: none;
+    opacity: 0;
+}
+
+.overlay.target {
+    display: block;
+    opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    align-items: center;
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close:hover {
+    color: #06D85F;
+}
+
+.popup .pop-content {
+    max-height: 30%;
+    overflow: auto;
+}
+
+.cong-move-txt {
+    margin: 10px 0 10px 0;
+}
+
+.cong-stars ul, .hist-table ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.cong-stars li, .hist-table li {
+    display: inline-block;
+    list-style: none;
+}
+
+/* Stars color style */
+
+.popup i {
+    color: darkorange;
+}
+
+/* button */
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #d40e19;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 5px;
+    width: 180px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 10px 0 0 0;
+}
+
+.button.play-again {
+    background-color: #287cff;
+}
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button span:after {
+    content: '\00D7';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button.play-again span:after {
+    content: '\2192';
+}
+
+.button:hover span {
+    padding-right: 25px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+/* Leader board styles */
+.leaderboard {
+    display: inline-block;
+}
+
+/* History table style */
+.hist-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #287cff;
+}
+
+.hist-table tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.hist-table td, .hist-table th {
+    width: 33%;
+    border: 2px solid #287cff;
+    text-align: center;
+}
+
+/* Responsive design for pop up */
+@media screen and (max-width: 700px) {
+    .popup {
+        width: 70%;
+    }
+}
+
+/* Animations */
+@keyframes flip {
+    from {
+        transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+
+    40% {
+        transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+        animation-timing-function: ease-in;
+    }
+
+    60% {
+        transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+        opacity: 1;
+    }
+
+    80% {
+        transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+    }
+
+    to {
+        transform: perspective(400px);
+    }
+}
+
+@keyframes wobble {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scaleX(1.25) scaleY(0.75);
+    }
+    40% {
+        transform: scaleX(0.75) scaleY(1.25);
+    }
+    60% {
+        transform: scaleX(1.15) scaleY(0.85);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
