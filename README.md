@@ -21,6 +21,6 @@ Star ratings is dynamic. Try to complete the game to retain 3 stars.
 
 When the game is completed, a final pop up is shown which also includes a section called 'Game History' which shows the latest 3 games played by you.
 
-###Contributing
+### Contributing
 
 This software is provided under MIT LLICENSE and any one willing to conftribute is permitted to do so in sub branches. Forking and PR is another option. Thanks.
